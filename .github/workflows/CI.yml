@@ -10,6 +10,12 @@ on:
 
 jobs:
   validation:
-    uses: microsoft/action-python/.github/workflows/validation.yml@0.6.4
-    with:
-      workdir: '.'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        tools: ['black', 'bandit', 'pylint', 'flake8']
+        include:
+          - tools: pytest
+            args: -m not integration and not gpu
+          - tools: pytest
+            args: -m integration
