@@ -21,25 +21,12 @@ jobs:
             args: -m integration
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v2
+      - name: Checkout Code
+        uses: actions/checkout@v3
         with:
-          python-version: 3.8
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-      - name: Run ${{ matrix.tools }} validation
-        run: |
-          if [ "${{ matrix.tools }}" == "black" ]; then
-            black --check .
-          elif [ "${{ matrix.tools }}" == "bandit" ]; then
-            bandit -r .
-          elif [ "${{ matrix.tools }}" == "pylint" ]; then
-            pylint --rcfile=setup.cfg --fail-under=9.0 --reports=n --score=n --output-format=colorized .
-          elif [ "${{ matrix.tools }}" == "flake8" ]; then
-            flake8 --config=setup.cfg .
-          elif [ "${{ matrix.tools }}" == "pytest" ]; then
-            pytest ${{ matrix.args }}
-          fi
+          fetch-depth: 0
+
+      - name: Lint Code Base
+        uses: github/super-linter@v4
+        env:
+          VALIDATE_ALL_CODEBASE: true
