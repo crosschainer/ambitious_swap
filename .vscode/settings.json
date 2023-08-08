@@ -25,5 +25,9 @@
     ],
     "isort.args": [
         "--settings-path=pyproject.toml"
-    ]
+    ],
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "docker.dockerPath": "/usr/local/bin/docker"
 }
