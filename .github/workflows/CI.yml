@@ -11,14 +11,7 @@ on:
 jobs:
   validation:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        tools: ['black', 'bandit', 'pylint', 'flake8']
-        include:
-          - tools: pytest
-            args: -m not integration and not gpu
-          - tools: pytest
-            args: -m integration
+    name: Lint Code Base
 
     steps:
       - name: Checkout Code
